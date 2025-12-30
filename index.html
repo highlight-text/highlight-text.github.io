@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>&lt;highlight-text&gt; Web Component Demo</title>
+  <script src="highlight-text.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+      background-color: #f5f5f5;
+    }
+    
+    h1 {
+      color: #333;
+      border-bottom: 3px solid #007bff;
+      padding-bottom: 10px;
+    }
+    
+    h2 {
+      color: #555;
+      margin-top: 30px;
+    }
+    
+    .demo-section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    highlight-text {
+      padding: 15px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      display: block;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    button:hover {
+      background-color: #0056b3;
+    }
+    
+    .controls {
+      margin: 15px 0;
+    }
+    
+    input[type="text"] {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    select {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .code-block {
+      background: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 15px;
+      margin: 10px 0;
+      overflow-x: auto;
+    }
+    
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+    
+    .info {
+      background: #e7f3ff;
+      border-left: 4px solid #007bff;
+      padding: 10px 15px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>&lt;highlight-text&gt; Web Component Demo</h1>
+  
+  <div class="info">
+    <strong>About:</strong> This Web Component uses the CSS Custom Highlight API to highlight text. 
+    Words to highlight can be configured using <code>&lt;highlight-word&gt;</code> elements in lightDOM 
+    or programmatically via the <code>highlightWord()</code> method.
+  </div>
+
+  <div class="demo-section">
+    <h2>Demo 1: Basic Highlighting with LightDOM Configuration</h2>
+    <p>The following text has words configured to be highlighted using <code>&lt;highlight-word&gt;</code> elements:</p>
+    
+    <highlight-text id="demo1">
+      <highlight-word color="yellow">JavaScript</highlight-word>
+      <highlight-word color="red">Web Components</highlight-word>
+      <highlight-word color="green">CSS</highlight-word>
+      
+      The modern web is built with JavaScript, HTML, and CSS. 
+      Web Components are a powerful feature that allows developers to create 
+      reusable custom elements. The CSS Custom Highlight API provides a way to 
+      style arbitrary ranges of text without modifying the DOM structure.
+    </highlight-text>
+    
+    <div class="code-block">
+      <code>&lt;highlight-text&gt;<br>
+  &nbsp;&nbsp;&lt;highlight-word color="yellow"&gt;JavaScript&lt;/highlight-word&gt;<br>
+  &nbsp;&nbsp;&lt;highlight-word color="red"&gt;Web Components&lt;/highlight-word&gt;<br>
+  &nbsp;&nbsp;&lt;highlight-word color="green"&gt;CSS&lt;/highlight-word&gt;<br>
+  &nbsp;&nbsp;The modern web is built with JavaScript...<br>
+&lt;/highlight-text&gt;</code>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>Demo 2: Programmatic Highlighting with highlightWord() Method</h2>
+    <p>Use the controls below to dynamically add highlights:</p>
+    
+    <highlight-text id="demo2">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    </highlight-text>
+    
+    <div class="controls">
+      <input type="text" id="wordInput" placeholder="Enter word to highlight" value="dolor">
+      <select id="colorSelect">
+        <option value="yellow">Yellow</option>
+        <option value="red">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <option value="orange">Orange</option>
+        <option value="pink">Pink</option>
+        <option value="purple">Purple</option>
+        <option value="cyan">Cyan</option>
+      </select>
+      <button onclick="addHighlight()">Highlight Word</button>
+    </div>
+    
+    <div class="code-block">
+      <code>const element = document.getElementById('demo2');<br>
+element.highlightWord('dolor', 'yellow');</code>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>Demo 3: Multiple Colors</h2>
+    <p>Demonstrating multiple words with different colors:</p>
+    
+    <highlight-text id="demo3">
+      <highlight-word color="yellow">HTML</highlight-word>
+      <highlight-word color="red">CSS</highlight-word>
+      <highlight-word color="green">JavaScript</highlight-word>
+      <highlight-word color="blue">API</highlight-word>
+      <highlight-word color="orange">DOM</highlight-word>
+      
+      HTML provides the structure, CSS provides the styling, and JavaScript 
+      provides the behavior. The DOM (Document Object Model) is the API that 
+      connects them all together. Modern Web Components leverage all these 
+      technologies to create reusable and encapsulated custom elements.
+    </highlight-text>
+  </div>
+
+  <div class="demo-section">
+    <h2>Demo 4: Dynamic Content with MutationObserver</h2>
+    <p>The component automatically detects new <code>&lt;highlight-word&gt;</code> elements:</p>
+    
+    <highlight-text id="demo4">
+      <highlight-word color="yellow">dynamic</highlight-word>
+      
+      This text contains dynamic content that can be updated. 
+      Click the button below to add a new highlight configuration.
+    </highlight-text>
+    
+    <div class="controls">
+      <button onclick="addDynamicHighlight()">Add "content" Highlight (Pink)</button>
+      <button onclick="addDynamicHighlight2()">Add "updated" Highlight (Purple)</button>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>Demo 5: Case-Insensitive Highlighting</h2>
+    <p>Highlights are case-insensitive by default:</p>
+    
+    <highlight-text id="demo5">
+      <highlight-word color="cyan">web</highlight-word>
+      
+      The WEB has evolved significantly. Web technologies continue to improve. 
+      Whether you write web, Web, or WEB, it all gets highlighted!
+    </highlight-text>
+  </div>
+
+  <script>
+    function addHighlight() {
+      const word = document.getElementById('wordInput').value;
+      const color = document.getElementById('colorSelect').value;
+      const element = document.getElementById('demo2');
+      
+      if (word.trim()) {
+        element.highlightWord(word, color);
+        alert(`Added highlight for "${word}" in ${color}`);
+      } else {
+        alert('Please enter a word to highlight');
+      }
+    }
+    
+    function addDynamicHighlight() {
+      const element = document.getElementById('demo4');
+      const highlightWord = document.createElement('highlight-word');
+      highlightWord.setAttribute('color', 'pink');
+      highlightWord.textContent = 'content';
+      element.appendChild(highlightWord);
+    }
+    
+    function addDynamicHighlight2() {
+      const element = document.getElementById('demo4');
+      const highlightWord = document.createElement('highlight-word');
+      highlightWord.setAttribute('color', 'purple');
+      highlightWord.textContent = 'updated';
+      element.appendChild(highlightWord);
+    }
+    
+    // Demonstrate programmatic highlighting on page load
+    window.addEventListener('load', () => {
+      // Pre-populate demo2 with some highlights
+      const demo2 = document.getElementById('demo2');
+      demo2.highlightWord('Lorem', 'blue');
+      demo2.highlightWord('ipsum', 'orange');
+    });
+  </script>
+</body>
+</html>
