@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Test - highlight-text</title>
+  <script src="highlight-text.js"></script>
+</head>
+<body>
+  <h1>Simple Test</h1>
+  
+  <h2>Test 1: Basic LightDOM Configuration</h2>
+  <highlight-text id="test1">
+    <highlight-word color="yellow">test</highlight-word>
+    This is a test of the highlighting system.
+  </highlight-text>
+  
+  <h2>Test 2: Programmatic Highlighting</h2>
+  <highlight-text id="test2">
+    Lorem ipsum dolor sit amet.
+  </highlight-text>
+  <button onclick="test2.highlightWord('Lorem', 'blue')">Highlight "Lorem" in Blue</button>
+  
+  <h2>Test 3: MutationObserver</h2>
+  <highlight-text id="test3">
+    <highlight-word color="red">dynamic</highlight-word>
+    This tests dynamic updates.
+  </highlight-text>
+  <button onclick="addWord()">Add "updates" highlight</button>
+  
+  <script>
+    const test2 = document.getElementById('test2');
+    const test3 = document.getElementById('test3');
+    
+    function addWord() {
+      const hw = document.createElement('highlight-word');
+      hw.setAttribute('color', 'green');
+      hw.textContent = 'updates';
+      test3.appendChild(hw);
+    }
+  </script>
+</body>
+</html>

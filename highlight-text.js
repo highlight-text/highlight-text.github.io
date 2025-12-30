@@ -2,6 +2,9 @@ class HighlightText extends HTMLElement {
   constructor() {
     super();
     
+    // Generate unique ID for this instance
+    this.instanceId = `ht-${Math.random().toString(36).substr(2, 9)}`;
+    
     // Attach shadow DOM and set up structure
     this.attachShadow({ mode: "open" }).append(
       this.createStyleElement(),
@@ -32,43 +35,49 @@ class HighlightText extends HTMLElement {
   disconnectedCallback() {
     // Clean up observer
     this.observer.disconnect();
+    
+    // Clean up CSS highlights for this instance
+    this.highlights.forEach((color) => {
+      CSS.highlights.delete(`${this.instanceId}-${color}`);
+    });
   }
   
   createStyleElement() {
     const style = document.createElement('style');
+    const id = this.instanceId;
     style.textContent = `
       :host {
         display: block;
       }
-      ::highlight(highlight-yellow) {
+      ::highlight(${id}-yellow) {
         background-color: yellow;
         color: black;
       }
-      ::highlight(highlight-red) {
+      ::highlight(${id}-red) {
         background-color: red;
         color: white;
       }
-      ::highlight(highlight-green) {
+      ::highlight(${id}-green) {
         background-color: green;
         color: white;
       }
-      ::highlight(highlight-blue) {
+      ::highlight(${id}-blue) {
         background-color: blue;
         color: white;
       }
-      ::highlight(highlight-orange) {
+      ::highlight(${id}-orange) {
         background-color: orange;
         color: black;
       }
-      ::highlight(highlight-pink) {
+      ::highlight(${id}-pink) {
         background-color: pink;
         color: black;
       }
-      ::highlight(highlight-purple) {
+      ::highlight(${id}-purple) {
         background-color: purple;
         color: white;
       }
-      ::highlight(highlight-cyan) {
+      ::highlight(${id}-cyan) {
         background-color: cyan;
         color: black;
       }
@@ -103,8 +112,10 @@ class HighlightText extends HTMLElement {
     // Get all text content from lightDOM (excluding highlight-word elements)
     const textNodes = this.getTextNodes(this);
     
-    // Clear existing CSS highlights
-    CSS.highlights.clear();
+    // Clear existing CSS highlights for this instance only
+    this.highlights.forEach((color) => {
+      CSS.highlights.delete(`${this.instanceId}-${color}`);
+    });
     
     // Apply each highlight
     this.highlights.forEach((color, word) => {
@@ -125,7 +136,7 @@ class HighlightText extends HTMLElement {
       
       if (ranges.length > 0) {
         const highlight = new Highlight(...ranges);
-        CSS.highlights.set(`highlight-${color}`, highlight);
+        CSS.highlights.set(`${this.instanceId}-${color}`, highlight);
       }
     });
   }
