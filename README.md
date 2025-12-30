@@ -1,4 +1,4 @@
-# highlight-text.github.io
+# [https://highlight-text.github.io](https://highlight-text.github.io/)
 
 `<highlight-text>` Web Component using the CSS Custom Highlight API
 
